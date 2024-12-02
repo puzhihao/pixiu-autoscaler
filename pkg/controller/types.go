@@ -58,22 +58,14 @@ const (
 )
 
 type PrometheusAdapterConfig struct {
-	Rules         []Rule         `yaml:"rules"`
 	ExternalRules []ExternalRule `yaml:"externalRules"`
 }
 
-type Rule struct {
-	MetricsQuery string      `yaml:"metricsQuery"`
-	Name         RuleName    `yaml:"name"`
-	Resources    ResourceMap `yaml:"resources"`
-	SeriesQuery  string      `yaml:"seriesQuery"`
-}
-
 type ExternalRule struct {
-	MetricsQuery string      `yaml:"metricsQuery"`
-	Name         RuleName    `yaml:"name"`
-	Resources    ResourceMap `yaml:"resources"`
-	SeriesQuery  string      `yaml:"seriesQuery"`
+	MetricsQuery string   `yaml:"metricsQuery"`
+	Name         RuleName `yaml:"name"`
+	Resources    Resource `yaml:"resources"`
+	SeriesQuery  string   `yaml:"seriesQuery"`
 }
 
 type RuleName struct {
@@ -81,10 +73,6 @@ type RuleName struct {
 	Matches string `yaml:"matches"`
 }
 
-type ResourceMap struct {
-	Overrides map[string]ResourceOverride `yaml:"overrides"`
-}
-
-type ResourceOverride struct {
-	Resource string `yaml:"resource"`
+type Resource struct {
+	Namespaced bool `yaml:"namespace"`
 }

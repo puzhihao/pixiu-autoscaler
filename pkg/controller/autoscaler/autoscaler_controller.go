@@ -233,15 +233,13 @@ func (ac *AutoscalerController) syncConfigMaps(key string) error {
 		}
 
 		externalRules = append(externalRules, controller.ExternalRule{
-			MetricsQuery: "<<.Series>>",
+			MetricsQuery: "<<.Series>>{<<.LabelMatchers>>}",
 			Name: controller.RuleName{
 				As:      "",
 				Matches: "",
 			},
-			Resources: controller.ResourceMap{
-				Overrides: map[string]controller.ResourceOverride{
-					"namespace": {Resource: "namespace"},
-				},
+			Resources: controller.Resource{
+				Namespaced: false,
 			},
 			SeriesQuery: metric.External.Metric.Name,
 		})
