@@ -17,7 +17,13 @@ kubez         333m         16%    1225Mi          65%
 NAME                     CPU(cores)   MEMORY(bytes)
 test1-54cd855b77-q67h6   1m           3Mi
 ```
+## 如需使用Prometheus数据作为监控指标
 
+在 `kubernetes` 集群中， 需要先完成 `prometheus` 组件的安装，请参考 [Prometheus](https://github.com/prometheus/prometheus)
+
+在 `kubernetes` 集群中， 需要先完成 `prometheus-adapter` 组件的安装，请参考 [prometheus-adapter](https://github.com/kubernetes-sigs/prometheus-adapter)
+
+以上组件使用 [kubez-ansible](https://github.com/pixiu-io/kubez-ansible) 均可自动安装
 ## Installing
 
 The steps can be found in [Installation](./deploy)
@@ -50,8 +56,10 @@ metadata:
     cpu.hpa.caoyingjunz.io/targetAverageValue: 600m
     memory.hpa.caoyingjunz.io/targetAverageValue: 60Mi
 
+    # targetCustomMetric 请填写Prometheus指标名称，请确认能实际拿到数据。
     # prometheus examples
-    # TODO
+    prometheus.hpa.caoyingjunz.io/targetAverageValue: "80"
+    hpa.caoyingjunz.io/targetCustomMetric: 'node_load1'
     ...
   name: test1
   namespace: default
